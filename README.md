@@ -9,7 +9,7 @@ import { auth } from 'google-oauth2';
 
 const clientId = '...';
 const clientSecret = '...';
-const ccope = 'https://www.googleapis.com/auth/analytics.readonly';
+const scope = 'https://www.googleapis.com/auth/analytics.readonly';
 
 auth({ clientId, clientSecret, scope }).then(res => console.log(res), err => console.error(err));
 ```
