@@ -4,6 +4,7 @@ import { parse } from 'url';
 import * as express from 'express';
 
 const RedirectURI = 'http://localhost:7361';
+const OAuth2TokenURL = 'https://www.googleapis.com/oauth2/v4/token';
 
 export interface Config {
   clientId: string;
@@ -14,61 +15,22 @@ export interface Config {
 export const auth = (config: Config) => {
   const OAuth2CodeURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${
     config.clientId
-  }&redirect_uri=${RedirectURI}&response_type=code&scope=${config.scope}`;
+  }&redirect_uri=${RedirectURI}&response_type=code&scope=${config.scope}&code_challenge_method=plain`;
 
-  opn(OAuth2CodeURL).then(
-    (cp: any) => {
-      console.log(process);
-      process = cp;
-    },
-    () => {
-      console.log('#############');
-    }
-  );
+  opn(OAuth2CodeURL).then((cp: any) => cp.kill());
 
   return new Promise(listen);
-};
-
-const Symbols = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
-
-const generateVerifier = () => {
-  const res = [];
-  for (let i = 0; i < 128; i += 1) {
-    res.push(Symbols[Math.floor(Math.random() * Symbols.length)]);
-  }
-  return res.join('');
-};
-
-const ClientID = '329457372673-hda3mp2vghisfobn213jpj8ck1uohi2d.apps.googleusercontent.com';
-const ClientSecret = '4camaoQPOz9edR-Oz19vg-lN';
-const Scope = 'https://www.googleapis.com/auth/analytics.readonly';
-
-const OAuth2CodeURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${ClientID}&redirect_uri=${RedirectURI}&response_type=code&scope=${Scope}`;
-const OAuth2TokenURL = 'https://www.googleapis.com/oauth2/v4/token';
-
-const OAuthCodes: { [key: string]: string } = {
-  access_denied: 'Access denied'
 };
 
 const listen = (resolve: Function, reject: Function) => {
   const app = express();
 
-  let process = {
-    kill() {}
-  };
-
   app.get('/', (req, res) => {
     const params = parse(req.url, true);
     const { code, error } = params.query;
     if (error) {
-      const errorMessage = OAuthCodes[error.toString()];
-      if (errorMessage) {
-        reject(errorMessage);
-        server.close();
-      } else {
-        reject('Unknown error');
-        server.close();
-      }
+      reject(error);
+      server.close();
     } else {
       post(
         OAuth2TokenURL,
@@ -103,6 +65,10 @@ const listen = (resolve: Function, reject: Function) => {
   });
   const server = app.listen(7361);
 };
+
+const ClientID = '329457372673-hda3mp2vghisfobn213jpj8ck1uohi2d.apps.googleusercontent.com';
+const ClientSecret = '4camaoQPOz9edR-Oz19vg-lN';
+const Scope = 'https://www.googleapis.com/auth/analytics.readonly';
 
 auth({
   clientId: ClientID,
