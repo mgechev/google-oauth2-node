@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "Minko Gechev <mgechev@gmail.com>",
   "license": "MIT",
+  "keywords": ["oauth2", "google", "google analytics", "gmail", "google drive"],
   "devDependencies": {
     "@types/express": "^4.11.1",
     "@types/node": "^9.6.1"
