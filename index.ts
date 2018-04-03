@@ -1,7 +1,7 @@
-const opn = require('opn');
+import * as express from 'express';
+
 import { post } from 'request-promise';
 import { parse } from 'url';
-import * as express from 'express';
 import { Server } from 'http';
 
 const OAuth2TokenURL = 'https://www.googleapis.com/oauth2/v4/token';
@@ -14,8 +14,8 @@ export interface Config {
 }
 
 export const auth = (config: Config) => {
-  return listenForTokens((port: number) =>
-    opn(
+  return listenForTokens(config, (port: number) =>
+    require('opn')(
       `${OAuth2CodeURL}?client_id=${config.clientId}&redirect_uri=http://localhost:${port}&response_type=code&scope=${
         config.scope
       }`,
@@ -24,7 +24,7 @@ export const auth = (config: Config) => {
   );
 };
 
-const listenForTokens = (ready: Function) => {
+const listenForTokens = (config: Config, ready: Function) => {
   const app = express();
   const socketList: any[] = [];
 
@@ -34,15 +34,19 @@ const listenForTokens = (ready: Function) => {
   let resolveCallback: Function;
   let rejectCallback: Function;
 
-  const cleanup = (cb: Function, res: express.Response, result: any) => {
-    res.end();
+  const { clientId, clientSecret } = config;
+
+  const cleanup = (cb: Function, res: express.Response, text: string, result: any) => {
+    res.set({ 'content-type': 'text/html; charset=utf-8' });
+    res.end(text);
     socketList.forEach(s => s.destroy());
     server.close(() => cb(result));
   };
 
   app.get('/', (req, res) => {
-    const resolve = cleanup.bind(null, resolveCallback, res);
-    const reject = cleanup.bind(null, rejectCallback, res);
+    const response = (e: string) => `<span style="font-size: 80px;">${e}</span>`;
+    const resolve = cleanup.bind(null, resolveCallback, res, response('🙌'));
+    const reject = cleanup.bind(null, rejectCallback, res, response('❌'));
 
     const params = parse(req.url, true);
     const { code, error } = params.query;
@@ -55,7 +59,7 @@ const listenForTokens = (ready: Function) => {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: encodeURI(
-          `client_id=${ClientID}&client_secret=${ClientSecret}&redirect_uri=http://localhost:${port}&grant_type=authorization_code&code=${code}`
+          `client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=http://localhost:${port}&grant_type=authorization_code&code=${code}`
         )
       }).then(response => resolve(JSON.parse(response)), reject);
     }
