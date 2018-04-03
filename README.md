@@ -2,6 +2,12 @@
 
 Using this client you can get a refresh and access tokens for using Google APIs. The client is specifically designed to be used in node.js, as an "Installed Application".
 
+## Installation
+
+```bash
+npm i google-oauth2-node --save
+```
+
 ## Usage
 
 ```ts
