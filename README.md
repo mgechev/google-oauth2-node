@@ -1,4 +1,4 @@
-# Node.js OAuth2 Google Client
+# Node.js Google OAuth2 Client
 
 Using this client you can get a refresh and access tokens for using Google APIs. The client is specifically designed to be used in node.js, as an "Installed Application".
 
