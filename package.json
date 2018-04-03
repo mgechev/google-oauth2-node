@@ -1,11 +1,14 @@
 {
-  "name": "oauth2-google",
+  "name": "google-oauth2-node",
   "version": "0.0.0",
   "description": "Client for OAuth2 authentication for Google APIs (Google Analytics, GMail, Google Docs, etc.)",
   "main": "index.js",
   "author": "Minko Gechev <mgechev@gmail.com>",
   "license": "MIT",
   "keywords": ["oauth2", "google", "google analytics", "gmail", "google drive"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && cp package.json README.md dist"
+  },
   "devDependencies": {
     "@types/express": "^4.11.1",
     "@types/node": "^9.6.1"
