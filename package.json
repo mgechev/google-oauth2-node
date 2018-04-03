@@ -10,15 +10,14 @@
   "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.11.1",
-    "@types/node": "^9.6.1",
-    "@types/open": "0.0.29",
-    "@types/opn": "^5.1.0",
-    "@types/request": "^2.47.0"
+    "@types/node": "^9.6.1"
   },
   "dependencies": {
+    "@types/opn": "^5.1.0",
+    "@types/request-promise": "^4.1.41",
     "express": "^4.16.3",
-    "open": "0.0.5",
     "opn": "^5.3.0",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2"
   }
 }
