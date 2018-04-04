@@ -1,6 +1,6 @@
 {
   "name": "google-oauth2-node",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Client for OAuth2 authentication for Google APIs (Google Analytics, GMail, Google Docs, etc.)",
   "main": "index.js",
   "author": "Minko Gechev <mgechev@gmail.com>",

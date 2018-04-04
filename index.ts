@@ -90,11 +90,3 @@ const listenForTokens = (config: Config, ready: Function) => {
     rejectCallback = f;
   });
 };
-
-auth({
-  clientId: '329457372673-hda3mp2vghisfobn213jpj8ck1uohi2d.apps.googleusercontent.com',
-  clientSecret: '4camaoQPOz9edR-Oz19vg-lN',
-  scope: 'https://www.googleapis.com/auth/analytics.readonly'
-}).then(a => {
-  console.log(a);
-});
