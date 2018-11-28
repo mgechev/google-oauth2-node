@@ -11,7 +11,7 @@ npm i google-oauth2-node --save
 ## Usage
 
 ```ts
-import { auth } from 'google-oauth2';
+import { auth } from 'google-oauth2-node';
 
 const clientId = '...';
 const clientSecret = '...';

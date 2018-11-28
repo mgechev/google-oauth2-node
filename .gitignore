@@ -6,3 +6,5 @@ client_id.txt
 128035004
 public/js
 dist
+node_modules
+

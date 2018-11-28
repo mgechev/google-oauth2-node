@@ -1,11 +1,21 @@
 {
   "name": "google-oauth2-node",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Client for OAuth2 authentication for Google APIs (Google Analytics, GMail, Google Docs, etc.)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mgechev/google-oauth2-node.git"
+  },
   "main": "index.js",
   "author": "Minko Gechev <mgechev@gmail.com>",
   "license": "MIT",
-  "keywords": ["oauth2", "google", "google analytics", "gmail", "google drive"],
+  "keywords": [
+    "oauth2",
+    "google",
+    "google analytics",
+    "gmail",
+    "google drive"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json && cp package.json README.md dist"
   },
@@ -15,7 +25,7 @@
   },
   "dependencies": {
     "@types/opn": "^5.1.0",
-    "opn": "^5.3.0",
-    "request": "^2.85.0"
+    "opn": "^5.4.0",
+    "request": "^2.88.0"
   }
 }
